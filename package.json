@@ -1,0 +1,35 @@
+{
+  "name": "stream-statics",
+  "version": "0.1.0",
+  "description": "Development server for testing and demonstrating front-end projects.",
+  "main": "./lib/stream-statics.js",
+  "bin": {
+    "stream-statics": "./cli.js",
+    "stst": "./cli.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "type": "module",
+  "types": "lib/stream-statics.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ovanderzee/stream-statics.git"
+  },
+  "keywords": [
+    "file",
+    "asset",
+    "resource",
+    "http-server",
+    "test tool",
+    "cli-app",
+    "cli"
+  ],
+  "author": "Onno van der Zee",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+  }
+}

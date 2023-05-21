@@ -1,0 +1,10 @@
+.circleci
+*.tgz
+coverage
+.DS_Store
+.editorconfig
+.idea
+node_modules
+src
+test
+tsconfig.json
