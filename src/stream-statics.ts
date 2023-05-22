@@ -1,17 +1,18 @@
-import http from 'http'
+import * as http from 'http'
 import url from 'url'
 import fs from 'fs'
 import path from 'path'
+import { StstConfig } from './types'
 
 export const defaultConfig: StstConfig = {
-    root: '.', // default folderName
-    port: 9630, // default portNumber
+    root: '.',
+    port: 9630
 }
 
 /*
     Read the file
 */
-const streamToString = async (stream) => {
+const streamToString = async (stream: fs.ReadStream): Promise<string> => {
     const chunks = [];
 
     for await (const chunk of stream) {
@@ -24,12 +25,16 @@ const streamToString = async (stream) => {
 /*
     Serve the stream
 */
-const serveResources = async function (request, response) {
-    const locator = new url.URL(request.url, `http://localhost:${port}`)
-    const fileStream = fs.createReadStream(moduleRoot + locator.pathname)
+const serveResources = async function (this: StstConfig, request: http.IncomingMessage, response: http.ServerResponse): Promise<void> {
+    if (!request.url) {
+        return
+    }
+
+    const locator: url.URL = new url.URL(request.url, `http://localhost:${this.port}`)
+    const fileStream: fs.ReadStream = fs.createReadStream(this.root + locator.pathname)
 
     try {
-        const contents = await streamToString(fileStream)
+        const contents: string = await streamToString(fileStream)
         response.writeHead(200);
         response.write(contents)
     }
@@ -43,7 +48,7 @@ const serveResources = async function (request, response) {
     }
 }
 
-export default const startServer = function (inputConfig: StstConfig) {
+export const startServer = function (inputConfig: StstConfig) {
     const config: StstConfig = Object.assign(defaultConfig, inputConfig)
     const srvr = serveResources.bind(config)
     const server = http.createServer(srvr)

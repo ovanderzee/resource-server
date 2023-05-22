@@ -28,8 +28,7 @@
   "author": "Onno van der Zee",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^16.18.32",
     "typescript": "^5.0.4"
-  },
-  "dependencies": {
   }
 }
