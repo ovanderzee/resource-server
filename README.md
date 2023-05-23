@@ -17,6 +17,8 @@ On the command line:
 
 ```sh
 npx stst --root folderName --port portNumber
+...
+kill $(lsof -t -i:<portNumber>)
 ```
 
 In a script:
@@ -29,7 +31,15 @@ const config = {
     port: 9630, // default portNumber
 }
 const server = startServer(config)
-
+...
 const callback = () => console.log(`Connection to localhost:${config.port} was closed`)
 server.close(callback)
+```
+
+## Demo
+Run:
+```sh
+npm run demo
+...
+ctr+c
 ```

@@ -2,7 +2,7 @@
 
 import { startServer } from './lib/stream-statics.js'
 
-if (process.argv && process.argv.length > 2) {
+if (process.argv && process.argv.length >= 2) {
     // [2, 4, 6] = --port --root etc...
     const cliArgs = process.argv.splice(2)
     const config = {}
