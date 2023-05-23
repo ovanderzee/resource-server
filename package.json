@@ -29,7 +29,11 @@
   "author": "Onno van der Zee",
   "license": "ISC",
   "devDependencies": {
+    "@types/mime-types": "^2.1.1",
     "@types/node": "^16.18.32",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.35"
   }
 }

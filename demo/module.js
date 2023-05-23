@@ -6,5 +6,5 @@ fetch('./logo.svg')
         return response.text()
     })
     .then(svg => {
-        document.querySelector('div.show-svg').innerHTML = svg
+        document.querySelector('div#show-svg').innerHTML = svg
     })

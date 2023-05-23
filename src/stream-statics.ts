@@ -2,7 +2,8 @@ import * as http from 'http'
 import url from 'url'
 import fs from 'fs'
 import path from 'path'
-import { StstConfig } from './types'
+import { StstConfig, StringOrFalse } from './types'
+import mime from 'mime-types'
 
 export const defaultConfig: StstConfig = {
     root: '.',
@@ -35,7 +36,17 @@ const serveResources = async function (this: StstConfig, request: http.IncomingM
 
     try {
         const contents: string = await streamToString(fileStream)
-        response.writeHead(200);
+        if (contents) {
+            response.setHeader('Content-Length', Buffer.byteLength(contents))
+        }
+
+        const fileName: string = path.basename(locator.pathname)
+        const contentType: StringOrFalse = mime.contentType(fileName)
+        if (contentType) {
+            response.setHeader('Content-Type', contentType)
+        }
+
+        response.writeHead(200)
         response.write(contents)
     }
     catch (err) {

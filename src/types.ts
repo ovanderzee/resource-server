@@ -6,3 +6,5 @@ export class StstConfig {
         this.root = root
     }
 }
+
+export type StringOrFalse = string | false;

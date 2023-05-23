@@ -4,8 +4,19 @@
         <link rel="stylesheet" href="./styles.css" />
     </head>
     <body>
-        <h2>Stream Statics</h2>
-        <div class="show-svg"></div>
-        <script src="module.js"></script>
+        <header>
+            <h2>Stream Statics</h2>
+            <h3 id="protocol-message">This page should be served by a webserver</h3>
+        </header>
+        <main>
+            <div id="show-svg"></div>
+        </main>
+        <script src="module.js" type="module"></script>
+        <script>
+            const isWebServed = location.protocol === 'http:' ||  location.protocol === 'https:'
+            if (!isWebServed) {
+                document.querySelector('#protocol-message').style.display = 'block'
+            }
+        </script>
     </body>
 </html>
