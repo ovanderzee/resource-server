@@ -11,16 +11,18 @@ export const defaultConfig: StstConfig = {
 }
 
 /*
-    Read the file
+    Stream the file
 */
-const streamToString = async (stream: fs.ReadStream): Promise<string> => {
-    const chunks = [];
-
+const outputStream = async (stream: fs.ReadStream, response: http.ServerResponse): Promise<void> => {
     for await (const chunk of stream) {
-        chunks.push(Buffer.from(chunk));
+        if (chunk instanceof Buffer) {
+            response.write(chunk)
+        } else {
+            // do we get here?
+            const buffered = Buffer.from(chunk);
+            response.write(buffered)
+        }
     }
-
-    return Buffer.concat(chunks).toString("utf-8");
 }
 
 /*
@@ -31,27 +33,29 @@ const serveResources = async function (this: StstConfig, request: http.IncomingM
         return
     }
 
-    const locator: url.URL = new url.URL(request.url, `http://localhost:${this.port}`)
-    const fileStream: fs.ReadStream = fs.createReadStream(this.root + locator.pathname)
+    let contentType: StringOrFalse = false;
 
     try {
-        const contents: string = await streamToString(fileStream)
-        if (contents) {
-            response.setHeader('Content-Length', Buffer.byteLength(contents))
-        }
-
+        const locator: url.URL = new url.URL(request.url, `http://localhost:${this.port}`)
         const fileName: string = path.basename(locator.pathname)
-        const contentType: StringOrFalse = mime.contentType(fileName)
+        contentType = mime.contentType(fileName)
+        const fileStream: fs.ReadStream = fs.createReadStream(this.root + locator.pathname)
+
         if (contentType) {
             response.setHeader('Content-Type', contentType)
+        } else {
+            console.log('No Content-Type found for', request.url)
         }
 
         response.writeHead(200)
-        response.write(contents)
+
+        await outputStream(fileStream, response)
     }
     catch (err) {
         // implicit 404
-        response.write('<h2>nothing to serve</h2>')
+        console.log('err', JSON.stringify(err, null, 2))
+        response.write(`<h1>Nothing to serve</h1>`)
+        response.write(`<h2>Handling ${request.url}${contentType ? ', content-type: ' + contentType : ''}</h2>`)
         response.write('<p>' + JSON.stringify(err, null, 2) + '</p>')
     }
     finally {
