@@ -33,8 +33,5 @@
     "@types/node": "^16.18.32",
     "clear-folder": "^5.0.0",
     "typescript": "^5.0.4"
-  },
-  "dependencies": {
-    "mime-types": "^2.1.35"
   }
 }

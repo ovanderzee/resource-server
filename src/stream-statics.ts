@@ -3,7 +3,7 @@ import url from 'url'
 import fs from 'fs'
 import path from 'path'
 import { StstConfig, StringOrFalse } from './types'
-import mime from 'mime-types'
+import mime from './optional-mime.js'
 
 export const defaultConfig: StstConfig = {
     root: '.',
