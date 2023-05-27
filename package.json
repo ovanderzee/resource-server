@@ -8,7 +8,7 @@
     "stst": "./cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "cf lib && tsc",
     "demo": "npm install && npm run build && node cli.js && open http://localhost:9630/demo/stream-statics.html"
   },
   "type": "module",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/mime-types": "^2.1.1",
     "@types/node": "^16.18.32",
+    "clear-folder": "^5.0.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {

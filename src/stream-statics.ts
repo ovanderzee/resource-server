@@ -70,11 +70,11 @@ export const startServer = function (inputConfig: StstConfig) {
     server.listen(config.port)
 
     console.log(
-        '\n------------------\n',
-        'stream statics', server,
-        'listening to localhost:' + config.port,
-        'looking at', config.root,
-        '\n==================\n\n',
+        `\n------------------------------------------------------------------------\n`,
+        `stream statics`,
+        `listening to localhost:${config.port},`,
+        `looking at '${config.root}'`,
+        `\n========================================================================\n\n`,
     )
 
     return server
