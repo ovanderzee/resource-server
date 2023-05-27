@@ -8,7 +8,7 @@
     "stst": "./cli.js"
   },
   "scripts": {
-    "build": "cf lib && tsc",
+    "build": "cf lib && tsc --resolveJsonModule",
     "demo": "npm install && npm run build && node cli.js && open http://localhost:9630/demo/stream-statics.html"
   },
   "type": "module",

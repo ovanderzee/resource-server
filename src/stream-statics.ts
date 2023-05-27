@@ -5,6 +5,9 @@ import path from 'path'
 import { StstConfig, StringOrFalse } from './types'
 import mime from './optional-mime.js'
 
+/*
+    All possible variables
+*/
 export const defaultConfig: StstConfig = {
     root: '.',
     port: 9630
