@@ -67,15 +67,26 @@ export const startServer = function (inputConfig: StstConfig) {
     const config: StstConfig = Object.assign(defaultConfig, inputConfig)
     const srvr = serveResources.bind(config)
     const server = http.createServer(srvr)
-    server.listen(config.port)
 
-    console.log(
-        `\n------------------------------------------------------------------------\n`,
-        `stream statics`,
-        `listening to localhost:${config.port},`,
-        `looking at '${config.root}'`,
-        `\n========================================================================\n\n`,
-    )
+    try {
+        server.listen(config.port)
+
+        console.log(
+            `\n------------------------------------------------------------------------\n`,
+            `stream statics:`,
+            `listening to localhost:${config.port},`,
+            `looking at '${config.root}'`,
+            `\n========================================================================\n\n`,
+        )
+    }
+    catch (err) {
+        console.log(
+            '\n------------------------------------\n',
+            `stream statics:`,
+            `error ${JSON.stringify(err, null, 2)}`,
+            '\n====================================\n\n',
+        )
+    }
 
     return server
 }

@@ -25,7 +25,7 @@ In a script:
 
 ```js
 import { startServer } from 'stream-statics'
-...
+
 const config = {
     root: '.', // default folderName
     port: 9630, // default portNumber
