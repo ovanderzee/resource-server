@@ -7,4 +7,6 @@ export class StstConfig {
     }
 }
 
-export type StringOrFalse = string | false;
+export type Literal = {[key: string]: string}
+
+export type StringOrFalse = string | false

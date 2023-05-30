@@ -2,6 +2,10 @@
 # stream-statics
 Lightweight webserver for testing and demonstrating front-end projects.
 
+A limited set of common mime-types is used. 
+When you install the mime-types package next to stream-statics all known mime-types can be used.
+This way the number of dependencies is limited.
+
 ## Usage
 Start a server for instance before starting a e2e test
 
