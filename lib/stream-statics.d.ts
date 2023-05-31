@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import * as http from 'http';
 import { StstConfig } from './types';
 export declare const defaultConfig: StstConfig;

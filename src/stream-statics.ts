@@ -66,7 +66,10 @@ const serveResources = async function (this: StstConfig, request: http.IncomingM
     }
 }
 
-export const startServer = function (inputConfig: StstConfig) {
+/*
+    Start the serve
+*/
+export const startServer = function (inputConfig: StstConfig): http.Server<typeof http.IncomingMessage, typeof http.ServerResponse> {
     const config: StstConfig = Object.assign(defaultConfig, inputConfig)
     const srvr = serveResources.bind(config)
     const server = http.createServer(srvr)

@@ -1,8 +1,7 @@
 # Changelog
 
-## [TODO]
+## [Unreleased]
 
-- Bundle type definitions
 - Unit tests
 - Choose http / http2 / https  protocol
 - Compressed pdf files?
@@ -13,6 +12,9 @@
 
 ### Added
 - Opt-in to use mime-types package
+
+### Fixed
+- Fixed typings
 
 
 ## [0.1.0] - 2023-05-28

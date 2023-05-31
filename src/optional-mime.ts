@@ -1,4 +1,4 @@
-import {Literal, StringOrFalse} from "./types";
+import {Literal} from "./types";
 import path from "path";
 /* @ts-ignore */
 import someContentTypes from './mime-light.json' assert { type: "json" };
