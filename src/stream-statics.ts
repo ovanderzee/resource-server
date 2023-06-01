@@ -2,13 +2,12 @@ import * as http from 'http'
 import url from 'url'
 import fs from 'fs'
 import path from 'path'
-import { StstConfig, StringOrFalse } from './types'
 import mime from './optional-mime.js'
 
 /*
     All possible variables
 */
-export const defaultConfig: StstConfig = {
+const defaultConfig: {root: string, port: number} = {
     root: '.',
     port: 9630
 }
@@ -31,12 +30,12 @@ const outputStream = async (stream: fs.ReadStream, response: http.ServerResponse
 /*
     Serve the stream
 */
-const serveResources = async function (this: StstConfig, request: http.IncomingMessage, response: http.ServerResponse): Promise<void> {
+const serveResources = async function (this: {root: string, port: number}, request: http.IncomingMessage, response: http.ServerResponse): Promise<void> {
     if (!request.url) {
         return
     }
 
-    let contentType: StringOrFalse = false;
+    let contentType: string | false = false;
 
     try {
         const locator: url.URL = new url.URL(request.url, `http://localhost:${this.port}`)
@@ -69,8 +68,8 @@ const serveResources = async function (this: StstConfig, request: http.IncomingM
 /*
     Start the serve
 */
-export const startServer = function (inputConfig: StstConfig): http.Server<typeof http.IncomingMessage, typeof http.ServerResponse> {
-    const config: StstConfig = Object.assign(defaultConfig, inputConfig)
+export const startServer = function (inputConfig: {root?: string, port?: number}): http.Server<typeof http.IncomingMessage, typeof http.ServerResponse> {
+    const config: {root: string, port: number} = Object.assign(defaultConfig, inputConfig)
     const srvr = serveResources.bind(config)
     const server = http.createServer(srvr)
 

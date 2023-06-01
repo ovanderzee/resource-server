@@ -1,4 +1,3 @@
-import {Literal} from "./types";
 import path from "path";
 /* @ts-ignore */
 import someContentTypes from './mime-light.json' assert { type: "json" };
@@ -14,7 +13,7 @@ catch (err) {
     mime = {
         contentType: (name: string): string | false => {
             const extention: string = path.extname(name).substring(1)
-            const mimeType = (someContentTypes as Literal)[extention]
+            const mimeType = (someContentTypes as {[key: string]: string})[extention]
             return mimeType || 'text/plain'
         }
     }

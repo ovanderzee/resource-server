@@ -13,6 +13,9 @@
 ### Added
 - Opt-in to use mime-types package
 
+### Changed
+- Replace type variables with descriptions
+
 ### Fixed
 - Fixed typings
 
