@@ -1,6 +1,7 @@
 
 # stream-statics
-Lightweight webserver for testing and demonstrating front-end projects.
+Lightweight webserver for testing and demonstrating front-end projects,
+running under HTTP, HTTPS or HTTP/2.
 
 A limited set of common mime-types is used.
 When you install the mime-types package next to stream-statics all known mime-types can be used.
@@ -14,12 +15,21 @@ The following shellscript will generate these:
 ```
 
 ## Usage
+
+Default configuration:
+
+```
+root: '.', // folderName
+protocol: 'http2', // 'http' | 'https' | 'http2'
+port: 9630,
+```
+
 Start a server for instance before starting a e2e test
 
 ```json
 "scripts": {
     "...": "...",
-    "pretest": "stst --port 3001",
+    "pretest": "stst --port 3001 --protocol http",
     "...": "..."
 }
 ```
@@ -39,6 +49,7 @@ import { startServer } from 'stream-statics'
 
 const config = {
     root: '.', // default folderName
+    protocol: 'http2', // default protocol
     port: 9630, // default portNumber
 }
 const server = startServer(config)
