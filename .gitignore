@@ -1,3 +1,10 @@
+*.cert
+*.crt
+*.csr
+*.ext
+*.key
+*.pem
+*.srl
 *.tgz
 coverage
 .DS_Store
