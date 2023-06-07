@@ -8,7 +8,7 @@
 - ETag, Content-Length and other headers
 
 
-## [0.2.0]
+## [0.2.0] - 2023-06-08
 
 ### Added
 - Opt-in to use mime-types package
