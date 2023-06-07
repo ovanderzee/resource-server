@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "cf lib && tsc --resolveJsonModule",
-    "demo": "npm install && npm run build && node cli.js && open http://localhost:9630/demo/stream-statics.html"
+    "demo": "./demo.sh"
   },
   "type": "module",
   "types": "lib/stream-statics.d.ts",

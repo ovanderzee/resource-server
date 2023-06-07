@@ -9,9 +9,11 @@ This way the number of dependencies is limited.
 
 ## Preparation
 For secure serving you need a private key and a certificate.
-The following shellscript will generate these:
+Run the following shellscript from the depending project root
+and generate these:
+
 ```sh
-./makeCert.sh
+./node_modules/stream-statics/makeCert.sh
 ```
 
 ## Usage
