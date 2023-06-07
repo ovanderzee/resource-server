@@ -1,4 +1,6 @@
 import * as http from 'http'
+import * as https from 'https'
+import * as http2 from 'http2'
 import url from 'url'
 import fs from 'fs'
 import path from 'path'
@@ -7,15 +9,27 @@ import mime from './optional-mime.js'
 /*
     All possible variables
 */
-const defaultConfig: {root: string, port: number} = {
+const defaultConfig: {root: string, protocol: 'http' | 'https' | 'http2', port: number} = {
     root: '.',
+    protocol: 'http2',
     port: 9630
+}
+
+const secureOptions: {key: Buffer, cert: Buffer} = {
+    key: fs.readFileSync('.stst-key.pem'),
+    cert: fs.readFileSync('.stst-crt.pem'),
 }
 
 /*
     Stream the file
 */
-const outputStream = async (stream: fs.ReadStream, response: http.ServerResponse): Promise<void> => {
+const outputStream = async (
+    stream: fs.ReadStream,
+    // solve error TS2349: This expression is not callable.
+    // Each member of the union type '[ ]' has signatures,
+    // but none of those signatures are compatible with each other.
+    response: any // http.ServerResponse | http2.Http2ServerResponse,
+): Promise<void> => {
     for await (const chunk of stream) {
         if (chunk instanceof Buffer) {
             response.write(chunk)
@@ -30,7 +44,14 @@ const outputStream = async (stream: fs.ReadStream, response: http.ServerResponse
 /*
     Serve the stream
 */
-const serveResources = async function (this: {root: string, port: number}, request: http.IncomingMessage, response: http.ServerResponse): Promise<void> {
+const serveResources = async function (
+    this: {root: string, protocol: 'http' | 'https' | 'http2', port: number},
+    request: http.IncomingMessage | http2.Http2ServerRequest,
+    // solve error TS2349: This expression is not callable.
+    // Each member of the union type '[ ]' has signatures,
+    // but none of those signatures are compatible with each other.
+    response: any // http.ServerResponse | http2.Http2ServerResponse,
+): Promise<void> {
     if (!request.url) {
         return
     }
@@ -68,18 +89,35 @@ const serveResources = async function (this: {root: string, port: number}, reque
 /*
     Start the serve
 */
-export const startServer = function (inputConfig: {root?: string, port?: number}): http.Server<typeof http.IncomingMessage, typeof http.ServerResponse> {
-    const config: {root: string, port: number} = Object.assign(defaultConfig, inputConfig)
-    const srvr = serveResources.bind(config)
-    const server = http.createServer(srvr)
+export const startServer = function (
+    inputConfig: {root?: string, protocol?: 'http' | 'https' | 'http2', port?: number}
+): http.Server | http2.Http2Server
+{
+    const config: {root: string, protocol: 'http' | 'https' | 'http2', port: number} = Object.assign(defaultConfig, inputConfig)
+    const srvrsrc = serveResources.bind(config)
+    let protocol, server
+
+    switch (config.protocol) {
+        case 'http':
+            protocol = 'HTTP'
+            server = http.createServer(srvrsrc)
+            break
+        case 'https':
+            protocol = 'HTTPS'
+            server = https.createServer(secureOptions, srvrsrc)
+            break
+        default: // 'http2'
+            protocol = 'HTTP/2'
+            server = http2.createSecureServer(secureOptions, srvrsrc)
+    }
 
     try {
         server.listen(config.port)
 
         console.log(
             `\n------------------------------------------------------------------------\n`,
-            `stream statics:`,
-            `listening to localhost:${config.port},`,
+            `stream statics on ${protocol}:\n`,
+            `listening to ${protocol === 'HTTP' ? 'http' : 'https'}://localhost:${config.port},`,
             `looking at '${config.root}'`,
             `\n========================================================================\n\n`,
         )

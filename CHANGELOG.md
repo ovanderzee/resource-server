@@ -3,7 +3,6 @@
 ## [Unreleased]
 
 - Unit tests
-- Choose http / http2 / https  protocol
 - Compressed pdf files?
 - ETag, Content-Length and other headers
 
@@ -12,6 +11,7 @@
 
 ### Added
 - Opt-in to use mime-types package
+- HTTPS and HTTP/2 support
 
 ### Changed
 - Replace type variables with descriptions
@@ -22,4 +22,4 @@
 
 ## [0.1.0] - 2023-05-28
 
-First release
+First release, serving HTTP/1.1
