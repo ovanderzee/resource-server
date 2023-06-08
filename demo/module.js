@@ -1,4 +1,4 @@
-fetch('./logo.svg')
+fetch('./stream.svg')
     .then(response => {
         if (!response.ok) {
             throw new Error(`Error fetching; Status: ${response.status}`);
@@ -6,5 +6,5 @@ fetch('./logo.svg')
         return response.text()
     })
     .then(svg => {
-        document.querySelector('div#show-svg').innerHTML = svg
+        document.querySelector('div#show-svg div').innerHTML = svg
     })

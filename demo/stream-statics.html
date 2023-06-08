@@ -5,14 +5,21 @@
     </head>
     <body>
         <header>
-            <h2>Stream Statics</h2>
-            <h3 id="protocol-message">This page should be served by a webserver</h3>
+            <h3 id="interact">
+                <a href="./stream.pdf" download title="download as PDF">PDF</a>
+            </h3>
+            <h1 id="caption">Stream Statics</h1>
+            <h2 id="protocol-message">This page should be served by a webserver</h2>
         </header>
         <main>
-            <div id="show-svg"></div>
-            <a href="./logo.pdf" download>download as PDF</a>
-            <br />
-            <img src="./stream.png" alt="brand graphic">
+            <div id="show-svg">
+                <h3>Fetched SVG image</h3>
+                <div>SVG Image...</div>
+            </div>
+            <div id="show-png">
+                <h3>Static PNG image</h3>
+                <img src="./stream.png" alt="brand graphic">
+            </div>
         </main>
         <script src="module.js" type="module"></script>
         <script>
