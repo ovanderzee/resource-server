@@ -61,5 +61,5 @@ Run:
 ```sh
 npm run demo
 ...
-ctr+c
+ctrl+c
 ```

@@ -6,7 +6,7 @@
 - ETag, Content-Length and other headers
 
 
-## [0.3.0]
+## [0.3.0] - 2023-06-13
 
 ### Changed
 - Silently generate https certificate when certificate is absent or expired
