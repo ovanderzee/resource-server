@@ -9,6 +9,7 @@
 ## [0.3.0]
 
 ### Changed
+- Silently generate https certificate when certificate is absent or expired
 - Nicer demo, smaller package size
 
 

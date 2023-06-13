@@ -3,18 +3,14 @@
 Lightweight webserver for testing and demonstrating front-end projects,
 running under HTTP, HTTPS or HTTP/2.
 
+## Mime types
 A limited set of common mime-types is used.
 When you install the mime-types package next to stream-statics all known mime-types can be used.
 This way the number of dependencies is limited.
 
-## Preparation
+## Secure serving
 For secure serving you need a private key and a certificate.
-Run the following shellscript from the depending project root
-and generate these:
-
-```sh
-./node_modules/stream-statics/makeCert.sh
-```
+These are generated on first secure run or when the certificate has expired.
 
 ## Usage
 

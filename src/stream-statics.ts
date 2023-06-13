@@ -5,6 +5,7 @@ import url from 'url'
 import fs from 'fs'
 import path from 'path'
 import mime from './optional-mime.js'
+import getSecureOptions from './certify-https.js'
 
 /*
     All possible variables
@@ -13,11 +14,6 @@ const defaultConfig: {root: string, protocol: 'http' | 'https' | 'http2', port: 
     root: '.',
     protocol: 'http2',
     port: 9630
-}
-
-const secureOptions: {key: Buffer, cert: Buffer} = {
-    key: fs.readFileSync('.stst-key.pem'),
-    cert: fs.readFileSync('.stst-crt.pem'),
 }
 
 /*
@@ -104,11 +100,11 @@ export const startServer = function (
             break
         case 'https':
             protocol = 'HTTPS'
-            server = https.createServer(secureOptions, srvrsrc)
+            server = https.createServer(getSecureOptions(), srvrsrc)
             break
         default: // 'http2'
             protocol = 'HTTP/2'
-            server = http2.createSecureServer(secureOptions, srvrsrc)
+            server = http2.createSecureServer(getSecureOptions(), srvrsrc)
     }
 
     try {
