@@ -7,6 +7,12 @@
 - ETag, Content-Length and other headers
 
 
+## [0.3.0]
+
+### Changed
+- Silently generate https certificate when certificate is absent or expired
+
+
 ## [0.2.0]
 
 ### Added
