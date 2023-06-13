@@ -3,8 +3,13 @@
 ## [Unreleased]
 
 - Unit tests
-- Compressed pdf files?
 - ETag, Content-Length and other headers
+
+
+## [0.3.0]
+
+### Changed
+- Nicer demo, smaller package size
 
 
 ## [0.2.0] - 2023-06-08

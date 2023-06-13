@@ -1,5 +1,5 @@
 body {
-    background: #fff;
+    background: #cfc;
     color: #963;
     font: 15px/1.333 sans-serif;
     margin: 0;
@@ -12,7 +12,8 @@ header, main {
 
 header {
     padding: 0 1em;
-    background: #cfc;
+    background: #9f9;
+    color: #630;
 }
 
 header #interact {
@@ -43,4 +44,9 @@ main {
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
+}
+
+#show-svg polygon:hover,
+#show-png img:hover {
+    opacity: 0.5;
 }
