@@ -1,8 +1,12 @@
 import * as fs from 'fs'
 import { execSync } from 'child_process'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
-const keyFile = '.localhost.key'
-const crtFile = '.localhost.crt'
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const keyFile = resolve(__dirname, '.localhost.key')
+const crtFile = resolve(__dirname, '.localhost.crt')
 
 const makeCertificate = `openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 30 -subj '/CN=localhost' -keyout ${keyFile} -out ${crtFile}`
 const outputValidity = `openssl x509  -noout -enddate -in ${crtFile}`
