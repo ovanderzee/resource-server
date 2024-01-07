@@ -57,9 +57,4 @@ server.close(callback)
 ```
 
 ## Demo
-Run:
-```sh
-npm run demo
-...
-ctrl+c
-```
+Run ```sh npm run demo ```

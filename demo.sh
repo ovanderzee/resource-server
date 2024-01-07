@@ -2,6 +2,5 @@
 
 npm install &&
 npm run build &&
-./makeCert.sh &&
-node cli.js &&
+node cli.js --protocol http &
 open http://localhost:9630/demo/stream-statics.html
