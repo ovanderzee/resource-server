@@ -2,5 +2,5 @@
 
 npm install &&
 npm run build &&
-node cli.js --protocol http &
-open http://localhost:9630/demo/stream-statics.html
+node cli.js --http --./demo --8800 &
+open http://localhost:8800/stream-statics.html

@@ -6,9 +6,10 @@
 - ETag, Content-Length and other headers
 
 
-## [0.4.0] - 2024-01
+## [0.4.0] - 2024-01-20
 
 - Write certificate in the folder where stream-statics resides, instead of the current working directory
+- Brief commandline arguments; numeric for port, http|http2|https for protocol and /^./ for root folder
 
 
 ## [0.3.0] - 2023-06-13

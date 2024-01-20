@@ -40,6 +40,14 @@ npx stst --root folderName --port portNumber
 kill $(lsof -t -i:<portNumber>)
 ```
 
+or briefly:
+
+```sh
+npx stst --../../yourProject --4210 --https
+...
+kill $(lsof -t -i:4210)
+```
+
 In a script:
 
 ```js

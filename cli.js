@@ -7,13 +7,28 @@ if (process.argv && process.argv.length >= 2) {
     const cliArgs = process.argv.splice(2)
     const config = {}
 
-    for (let i = 0; i < cliArgs.length; i = i + 2) {
-        if (cliArgs[i + 1]) {
+    for (let i = 0; i < cliArgs.length; i++) {
+        if (cliArgs[i].startsWith('--')) {
             const arg = cliArgs[i].replace(/^--/, '')
-            if (arg === 'port') {
-                config[arg] = Number(cliArgs[i + 1])
-            } else {
-                config[arg] = cliArgs[i + 1]
+
+            switch (cliArgs[i + 1] && arg) {
+                case 'port':
+                    config.port = Number(cliArgs[i + 1])
+                    break
+                case 'protocol':
+                    config.protocol = cliArgs[i + 1]
+                    break
+                case 'root':
+                    config.root = cliArgs[i + 1]
+                    break
+                default:
+                    if (!!Number(arg)) {
+                        config.port = arg
+                    } else if (arg === 'http' || arg === 'http2' || arg === 'https') {
+                        config.protocol = arg
+                    } else if (arg.startsWith('.')) {
+                        config.root = arg
+                    }
             }
         }
     }

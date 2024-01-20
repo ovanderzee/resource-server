@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "cf lib && tsc --resolveJsonModule",
-    "demo": "./demo.sh"
+    "demo": "./demo.sh",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "type": "module",
   "types": "lib/stream-statics.d.ts",
