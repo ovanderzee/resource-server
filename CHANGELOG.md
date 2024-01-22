@@ -7,6 +7,16 @@
 - Catch error for portnumber in use (choose with y|n close existing connection after 5 seconds)
 - Catch error for non-existent foldername (stop)
 - Default one-liners for open and close connections
+- Organise types <-> Triple-Slash Directives
+- Check functions for config input in cli and in startServer
+
+
+## [0.5.0] - 2024
+
+### Changed
+- Check input for root folder
+
+### Added
 
 
 ## [0.4.0] - 2024-01-20

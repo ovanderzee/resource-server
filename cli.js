@@ -26,7 +26,7 @@ if (process.argv && process.argv.length >= 2) {
                         config.port = arg
                     } else if (arg === 'http' || arg === 'http2' || arg === 'https') {
                         config.protocol = arg
-                    } else if (arg.startsWith('.')) {
+                    } else if (arg.startsWith('/') || arg.startsWith('./') || arg.startsWith('../')) {
                         config.root = arg
                     }
             }
