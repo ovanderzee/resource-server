@@ -6,11 +6,12 @@ import fs from 'fs'
 import path from 'path'
 import mime from './optional-mime.js'
 import getSecureOptions from './certify-https.js'
+import * as types from './types'
 
 /*
     All possible variables
 */
-const defaultConfig: {root: string, protocol: 'http' | 'https' | 'http2', port: number} = {
+const defaultConfig: types.ServerConfig = {
     root: '.',
     protocol: 'http2',
     port: 9630
@@ -41,7 +42,7 @@ const outputStream = async (
     Serve the stream
 */
 const serveResources = async function (
-    this: {root: string, protocol: 'http' | 'https' | 'http2', port: number},
+    this: types.ServerConfig,
     request: http.IncomingMessage | http2.Http2ServerRequest,
     // solve error TS2349: This expression is not callable.
     // Each member of the union type '[ ]' has signatures,
@@ -85,11 +86,8 @@ const serveResources = async function (
 /*
     Start the serve
 */
-export const startServer = function (
-    inputConfig: {root?: string, protocol?: 'http' | 'https' | 'http2', port?: number}
-): http.Server | http2.Http2Server
-{
-    const config: {root: string, protocol: 'http' | 'https' | 'http2', port: number} = Object.assign(defaultConfig, inputConfig)
+export const startServer = function (inputConfig: types.InputConfig): types.WebServer {
+    const config: types.ServerConfig = Object.assign(defaultConfig, inputConfig)
     const srvrsrc = serveResources.bind(config)
     let protocol, server
 

@@ -1,8 +1,2 @@
-/// <reference types="node" />
-import * as http from 'http';
-import * as http2 from 'http2';
-export declare const startServer: (inputConfig: {
-    root?: string;
-    protocol?: 'http' | 'https' | 'http2';
-    port?: number;
-}) => http.Server | http2.Http2Server;
+import * as types from './types';
+export declare const startServer: (inputConfig: types.InputConfig) => types.WebServer;
