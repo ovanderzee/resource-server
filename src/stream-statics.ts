@@ -17,6 +17,31 @@ const defaultConfig: types.ServerConfig = {
     port: 9630
 }
 
+const logError = (err: unknown):void => {
+    console.log(
+        '---- stream statics ----------------\n',
+        `error ${JSON.stringify(err, null, 2)}`,
+    )
+}
+
+/*
+    Create the server
+*/
+const createServer = function (config: types.ServerConfig): types.WebServer {
+    const srvrsrc = serveResources.bind(config)
+    let server
+
+    if (config.protocol === 'http') {
+        server = http.createServer(srvrsrc)
+    } else if (config.protocol === 'https') {
+        server = https.createServer(getSecureOptions(), srvrsrc)
+    } else { // if (config.protocol === 'http2') {
+        server = http2.createSecureServer(getSecureOptions(), srvrsrc)
+    }
+
+    return server
+}
+
 /*
     Stream the file
 */
@@ -73,7 +98,7 @@ const serveResources = async function (
     }
     catch (err) {
         // implicit 404
-        console.log('err', JSON.stringify(err, null, 2))
+        logError(err)
         response.write(`<h1>Nothing to serve</h1>`)
         response.write(`<h2>Handling ${request.url}${contentType ? ', content-type: ' + contentType : ''}</h2>`)
         response.write('<p>' + JSON.stringify(err, null, 2) + '</p>')
@@ -88,41 +113,19 @@ const serveResources = async function (
 */
 export const startServer = function (inputConfig: types.InputConfig): types.WebServer {
     const config: types.ServerConfig = Object.assign(defaultConfig, inputConfig)
-    const srvrsrc = serveResources.bind(config)
-    let protocol, server
-
-    switch (config.protocol) {
-        case 'http':
-            protocol = 'HTTP'
-            server = http.createServer(srvrsrc)
-            break
-        case 'https':
-            protocol = 'HTTPS'
-            server = https.createServer(getSecureOptions(), srvrsrc)
-            break
-        default: // 'http2'
-            protocol = 'HTTP/2'
-            server = http2.createSecureServer(getSecureOptions(), srvrsrc)
-    }
+    const server: types.WebServer = createServer(config)
 
     try {
         server.listen(config.port)
 
         console.log(
-            `\n------------------------------------------------------------------------\n`,
-            `stream statics on ${protocol}:\n`,
-            `listening to ${protocol === 'HTTP' ? 'http' : 'https'}://localhost:${config.port},`,
-            `looking at '${config.root}'`,
-            `\n========================================================================\n\n`,
+            `\n---- stream statics ----------------------------------------------------\n`,
+            `looking at '${config.root}',`,
+            `listening to ${config.protocol === 'http2' ? 'https' : 'http'}://localhost:${config.port}`,
         )
     }
     catch (err) {
-        console.log(
-            '\n------------------------------------\n',
-            `stream statics:`,
-            `error ${JSON.stringify(err, null, 2)}`,
-            '\n====================================\n\n',
-        )
+        logError(err)
     }
 
     return server
