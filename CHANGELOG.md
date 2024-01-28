@@ -5,7 +5,7 @@
 - Unit tests
 - ETag, Content-Length and other headers
 - Default one-liners for open and close connections
-
+- A close command for CLI
 
 ## [0.5.0] - 2024-01-28
 
