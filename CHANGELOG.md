@@ -5,16 +5,17 @@
 - Unit tests
 - ETag, Content-Length and other headers
 - Default one-liners for open and close connections
-- Organise types <-> Triple-Slash Directives
-- Check functions for config input in cli and in startServer
 
 
-## [0.5.0] - 2024
+## [0.5.0] - 2024-01-28
 
 ### Changed
-- Check input for root folder
+- Better typing
+- Concise messages
 
 ### Added
+- Check functions for configuration input in cli and in startServer
+- Unit tests for configuration
 
 
 ## [0.4.0] - 2024-01-20

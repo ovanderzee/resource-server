@@ -1,23 +1,27 @@
 
 # stream-statics
 Lightweight webserver for testing and demonstrating front-end projects,
-running under HTTP, HTTPS or HTTP/2.
+running HTTP, HTTPS or HTTP/2.
 
 ## Mime types
 A limited set of common mime-types is used.
 When you install the mime-types package next to stream-statics all known mime-types can be used.
 This way the number of dependencies is limited.
 
+## Configuration
+Before setting up a new server, a few checks are made.
+When the port number is in use or when the root folder can't be found, the startServer function will error.
+
 ## Secure serving
-For secure serving you need a private key and a certificate.
-These are generated on first secure run or when the certificate has expired.
+On first secure run, or when the certificate has expired,
+a private key and a certificate are generated inside the module folder
 
 ## Usage
 
 Default configuration:
 
 ```
-root: './', // folderName
+root: './',
 protocol: 'http2', // 'http' | 'https' | 'http2'
 port: 9630,
 ```
@@ -35,15 +39,7 @@ Start a server for instance before starting a e2e test
 On the command line:
 
 ```sh
-npx stst --root folderName --port portNumber
-...
-kill $(lsof -t -i:<portNumber>)
-```
-
-or briefly:
-
-```sh
-npx stst --../../yourProject --4210 --https
+npx stst --https --4210 --../../yourProject
 ...
 kill $(lsof -t -i:4210)
 ```
@@ -54,15 +50,18 @@ In a script:
 import { startServer } from 'stream-statics'
 
 const config = {
-    root: '.', // default folderName
+    root: './', // default folderName
     protocol: 'http2', // default protocol
     port: 9630, // default portNumber
 }
-const server = startServer(config)
+const server = startServer(config) // argument is required for now.
 ...
 const callback = () => console.log(`Connection to localhost:${config.port} was closed`)
 server.close(callback)
 ```
 
 ## Demo
-Run ```sh npm run demo ```
+Run
+```sh
+npm run demo
+```
