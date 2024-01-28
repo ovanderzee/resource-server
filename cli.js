@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { startServer } from './lib/stream-statics.js'
+import { spotPort, spotProtocol, spotRoot } from './lib/configuration.js'
 
 if (process.argv && process.argv.length >= 2) {
     // [2, 4, 6] = --port --root etc...
@@ -22,11 +23,11 @@ if (process.argv && process.argv.length >= 2) {
                     config.root = cliArgs[i + 1]
                     break
                 default:
-                    if (!!Number(arg)) {
+                    if (spotPort(arg)) {
                         config.port = arg
-                    } else if (arg === 'http' || arg === 'http2' || arg === 'https') {
+                    } else if (spotProtocol(arg)) {
                         config.protocol = arg
-                    } else if (arg.startsWith('/') || arg.startsWith('./') || arg.startsWith('../')) {
+                    } else if (spotRoot(arg)) {
                         config.root = arg
                     }
             }

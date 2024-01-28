@@ -7,15 +7,7 @@ import path from 'path'
 import mime from './optional-mime.js'
 import getSecureOptions from './certify-https.js'
 import * as types from './types'
-
-/*
-    All possible variables
-*/
-const defaultConfig: types.ServerConfig = {
-    root: '.',
-    protocol: 'http2',
-    port: 9630
-}
+import { defaultConfig } from './configuration.js'
 
 const logError = (err: unknown):void => {
     console.log(

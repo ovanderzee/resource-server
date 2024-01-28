@@ -10,7 +10,8 @@
   "scripts": {
     "build": "cf lib && tsc --resolveJsonModule",
     "demo": "./demo.sh",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "pretest": "npm run build",
+    "test": "c8 -r text node lib/__tests__/test.js"
   },
   "type": "module",
   "types": "lib/stream-statics.d.ts",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/mime-types": "^2.1.4",
     "@types/node": "^20.10.7",
+    "c8": "^9.1.0",
     "clear-folder": "^5.0.0",
     "typescript": "^5.3.3"
   }

@@ -17,7 +17,7 @@ These are generated on first secure run or when the certificate has expired.
 Default configuration:
 
 ```
-root: '.', // folderName
+root: './', // folderName
 protocol: 'http2', // 'http' | 'https' | 'http2'
 port: 9630,
 ```
