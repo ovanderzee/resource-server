@@ -1,4 +1,7 @@
+import detect from 'detect-port'
 import * as types from './types';
+import fs from 'fs';
+import path from 'path';
 
 export const defaultConfig: types.ServerConfig = {
     root: './',
@@ -14,3 +17,19 @@ export const spotProtocol = (protocol: string): boolean => ['http', 'http2', 'ht
 
 // Distinct the root folder name from other values
 export const spotRoot = (folder: string): boolean => ['../', './', '/'].some(start => folder.startsWith(start))
+
+// Check availability of port
+export const checkPort = async (port: number): Promise<boolean> => {
+    const portOk =
+        spotPort(port) &&
+        await detect(port) === port
+    return portOk
+}
+
+// Check existence of root
+export const checkRoot = (root: string): boolean => {
+    const rootOk =
+        spotRoot(root) &&
+        fs.existsSync(path.resolve(root))
+    return rootOk
+}

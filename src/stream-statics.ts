@@ -7,13 +7,17 @@ import path from 'path'
 import mime from './optional-mime.js'
 import getSecureOptions from './certify-https.js'
 import * as types from './types'
-import { defaultConfig } from './configuration.js'
+import { checkPort, checkRoot, defaultConfig } from './configuration.js'
 
-const logError = (err: unknown):void => {
-    console.log(
+const logError = (err: unknown): void => {
+    console.error(
         '---- stream statics ----------------\n',
         `error ${JSON.stringify(err, null, 2)}`,
     )
+}
+
+const throwError = (text: string): void => {
+    throw new Error(text)
 }
 
 /*
@@ -103,8 +107,17 @@ const serveResources = async function (
 /*
     Start the serve
 */
-export const startServer = function (inputConfig: types.InputConfig): types.WebServer {
+export const startServer = async function (inputConfig: types.InputConfig): Promise<types.WebServer> {
     const config: types.ServerConfig = Object.assign(defaultConfig, inputConfig)
+
+    if (!checkRoot(config.root)) {
+        throwError(`Path "${path.resolve(config.root)}" can not be found`)
+    }
+
+    if (!await checkPort(config.port)) {
+        throwError(`Port "${config.port}" is already in use`)
+    }
+
     const server: types.WebServer = createServer(config)
 
     try {
