@@ -24,7 +24,7 @@
 - Write certificate in the folder where stream-statics resides, instead of the current working directory
 
 ### Added
-- Brief commandline arguments; numeric for port, http|http2|https for protocol and /^./ for root folder
+- Brief commandline arguments; numeric for port, http | http2 | https for protocol and relative path for root folder
 
 
 ## [0.3.0] - 2023-06-13
