@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import { execSync } from 'child_process'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
+import {throwError} from './helpers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -27,7 +28,7 @@ const getSecureOptions = (): {key: Buffer, cert: Buffer} => {
 
         const timeLeft = endDate.getTime() - Date.now()
         if (timeLeft < 0) {
-            throw new Error('certificate expired')
+            throwError('certificate expired')
         }
         return secureOptions
     }

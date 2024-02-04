@@ -8,17 +8,7 @@ import mime from './optional-mime.js'
 import getSecureOptions from './certify-https.js'
 import * as types from './types'
 import { checkPort, checkRoot, defaultConfig } from './configuration.js'
-
-const logError = (err: unknown): void => {
-    console.error(
-        '---- stream statics ----------------\n',
-        `error ${JSON.stringify(err, null, 2)}`,
-    )
-}
-
-const throwError = (text: string): void => {
-    throw new Error(text)
-}
+import {logError, logNote, throwError} from './helpers.js'
 
 /*
     Create the server
@@ -85,7 +75,7 @@ const serveResources = async function (
         if (contentType) {
             response.setHeader('Content-Type', contentType)
         } else {
-            console.log('No Content-Type found for', request.url)
+            logNote(`No Content-Type found for ${request.url}`)
         }
 
         response.writeHead(200)
@@ -123,10 +113,9 @@ export const startServer = async function (inputConfig: types.InputConfig): Prom
     try {
         server.listen(config.port)
 
-        console.log(
-            `\n---- stream statics ----------------------------------------------------\n`,
-            `looking at '${config.root}',`,
-            `listening to ${config.protocol === 'http2' ? 'https' : 'http'}://localhost:${config.port}`,
+        logNote(
+            `looking at '${config.root}'
+            \nlistening to ${config.protocol === 'http2' ? 'https' : 'http'}://localhost:${config.port}`
         )
     }
     catch (err) {
