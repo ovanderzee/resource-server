@@ -8,7 +8,7 @@ import mime from './optional-mime.js'
 import getSecureOptions from './certify-https.js'
 import * as types from './types'
 import { checkPort, checkRoot, defaultConfig } from './configuration.js'
-import {logError, logNote, throwError} from './helpers.js'
+import {isDirectory, isExistent, isFile, logError, logNote, throwError} from './helpers.js'
 
 /*
     Create the server
@@ -50,6 +50,25 @@ const outputStream = async (
 }
 
 /*
+    Look for index file, returns path to index or undefined
+*/
+const tryRedirect = (absPath: string): string | undefined => {
+    // check for index.html etc.
+    const extentions = ['html', 'htm', 'gif', 'jpg', 'jpeg', 'png', 'svg', 'xml']
+
+    const filePaths = extentions.map(ext => {
+        const indexFile = path.resolve(absPath + '/index.' + ext)
+        if (isExistent(indexFile) && isFile(indexFile)) {
+            return indexFile
+        }
+    }).filter(x => x)
+
+    if (filePaths[0]) {
+        return filePaths[0]
+    }
+}
+
+/*
     Serve the stream
 */
 const serveResources = async function (
@@ -65,18 +84,27 @@ const serveResources = async function (
     }
 
     let contentType: string | false = false;
+    let absolutePath: string = ''
 
     try {
         const locator: url.URL = new url.URL(request.url, `http://localhost:${this.port}`)
-        const fileName: string = path.basename(locator.pathname)
-        contentType = mime.contentType(fileName)
-        const fileStream: fs.ReadStream = fs.createReadStream(this.root + locator.pathname)
+
+        absolutePath = path.resolve(this.root + locator.pathname)
+
+        if (isExistent(absolutePath) && isDirectory(absolutePath)) {
+            const indexPath = tryRedirect(absolutePath)
+            absolutePath = indexPath ? indexPath : absolutePath
+        }
+
+        contentType = mime.contentType(path.basename(absolutePath))
 
         if (contentType) {
             response.setHeader('Content-Type', contentType)
         } else {
             logNote(`No Content-Type found for ${request.url}`)
         }
+
+        const fileStream = fs.createReadStream(absolutePath);
 
         response.writeHead(200)
 
@@ -85,9 +113,8 @@ const serveResources = async function (
     catch (err) {
         // implicit 404
         logError(err)
-        response.write(`<h1>Nothing to serve</h1>`)
-        response.write(`<h2>Handling ${request.url}${contentType ? ', content-type: ' + contentType : ''}</h2>`)
-        response.write('<p>' + JSON.stringify(err, null, 2) + '</p>')
+        response.write(`<h1>Page not found</h1>`)
+        response.write('<p>' + absolutePath + '</p>')
     }
     finally {
         response.end()
