@@ -14,6 +14,7 @@
 - Concise messages
 - Require the configured (web)root folder to be explicitly relative to project folder, using the '/' character
 - Require the configured port to be 0 < number < 65536 and not to be occupied
+- Main function startServer became async
 
 ### Added
 - Check functions for configuration input in cli and in startServer

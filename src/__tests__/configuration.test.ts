@@ -152,7 +152,7 @@ describe('Default configuration', () => {
     })
 })
 
-describe('Check availability of port', () => {
+describe('Check availability of port', async() => {
     it('should accept an unused port number', async () => {
         const portOk = await cfg.checkPort(cfg.defaultConfig.port)
 

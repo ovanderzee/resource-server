@@ -54,7 +54,7 @@ const config = {
     protocol: 'http2', // default protocol
     port: 9630, // default portNumber
 }
-const server = startServer(config) // argument is required for now.
+const server = await startServer(config) // argument is required for now.
 ...
 const callback = () => console.log(`Connection to localhost:${config.port} was closed`)
 server.close(callback)

@@ -34,5 +34,5 @@ if (process.argv && process.argv.length >= 2) {
         }
     }
 
-    startServer(config)
+    await startServer(config)
 }
