@@ -131,7 +131,7 @@ export const startServer = async function (inputConfig: types.InputConfig): Prom
         throwError(`Path "${path.resolve(config.root)}" can not be found`)
     }
 
-    if (!await checkPort(config.port)) {
+    if (!(await checkPort(config.port))) {
         throwError(`Port "${config.port}" is already in use`)
     }
 

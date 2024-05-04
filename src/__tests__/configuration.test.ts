@@ -24,7 +24,7 @@ describe('Spot portnumber', () => {
         )
     })
 
-    it('should reject a port number smaller than zero', () => {
+    it('should reject a port number smaller than or equal to zero', () => {
         const value = 0
         const spot = cfg.spotPort(value)
 

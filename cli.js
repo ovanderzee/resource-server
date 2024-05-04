@@ -24,7 +24,7 @@ if (process.argv && process.argv.length >= 2) {
                     break
                 default:
                     if (spotPort(arg)) {
-                        config.port = arg
+                        config.port = Number(arg)
                     } else if (spotProtocol(arg)) {
                         config.protocol = arg
                     } else if (spotRoot(arg)) {
