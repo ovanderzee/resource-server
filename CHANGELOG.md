@@ -7,6 +7,17 @@
 - Default one-liners for open and close connections
 - A close command for CLI
 
+
+## [0.5.1] 2024-05-14
+
+### Added
+- Opens index files when opening a directory
+
+### Fixed
+- Fixed typings for portnumbers
+- Mention startServer is async in README
+
+
 ## [0.5.0] - 2024-01-28
 
 ### Changed
