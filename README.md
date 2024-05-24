@@ -2,6 +2,7 @@
 # stream-statics
 Lightweight webserver for testing and demonstrating front-end projects,
 running HTTP, HTTPS or HTTP/2.
+A command to terminate the server is included.
 
 ## Mime types
 A limited set of common mime-types is used.
@@ -33,15 +34,17 @@ Start a server for instance before starting a e2e test
     "...": "...",
     "pretest": "stst --port 3001 --protocol http",
     "...": "..."
+    "posttest": "ststop --port 3001",
+    "...": "..."
 }
 ```
 
-On the command line:
+On the command line, with short argument syntax:
 
 ```sh
 npx stst --https --4210 --../../yourProject
 ...
-kill $(lsof -t -i:4210)
+npx ststop --4210
 ```
 
 In a script:
