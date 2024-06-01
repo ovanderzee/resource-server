@@ -1,13 +1,13 @@
 import { spawnSync } from 'child_process'
 import { spotPort } from './lib/configuration.js'
 
-const terminateServer = (port) => {
+const killServer = (port) => {
     const lsofOut = spawnSync( 'lsof', ['-t', '-i:' + port], { encoding: 'utf-8' } );
     const pids = lsofOut.stdout.trim()
     if (pids) {
-        console.log('terminating server at port' , port)
+        console.log('signal "kill" to server at port' , port)
         pids.split('\n').forEach(
-            pid=> spawnSync('kill', [pid])
+            pid=> spawnSync('kill', ['-s', 'KILL', pid])
         )
     } else {
         console.log('port', port, 'not active')
@@ -24,11 +24,11 @@ if (process.argv && process.argv.length >= 2) {
 
             switch (cliArgs[i + 1] && arg) {
                 case 'port':
-                    terminateServer(Number(cliArgs[i + 1]))
+                    killServer(Number(cliArgs[i + 1]))
                     break
                 default:
                     if (spotPort(arg)) {
-                        terminateServer(Number(arg))
+                        killServer(Number(arg))
                     }
             }
         }
