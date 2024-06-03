@@ -1,6 +1,6 @@
 import path from "path";
 /* @ts-ignore */
-import someContentTypes from './mime-light.json' assert { type: "json" };
+import someContentTypes from './mime-light.json' with { type: "json" };
 
 /*
     Select dependency or option
