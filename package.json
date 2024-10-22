@@ -2,19 +2,19 @@
   "name": "stream-statics",
   "version": "0.6.0",
   "description": "Development server for testing and demonstrating front-end projects.",
-  "main": "./lib/stream-statics.js",
+  "main": "./build/stream-statics.js",
   "bin": {
     "stream-statics": "cli.js",
     "stst": "cli.js",
     "ststop": "stop.js"
   },
   "scripts": {
-    "build": "cf lib && tsc --resolveJsonModule",
+    "build": "cf build && tsc --resolveJsonModule",
     "pretest": "npm run build",
-    "test": "c8 -r text node lib/__tests__/test.js"
+    "test": "c8 -r text node build/__tests__/test.js"
   },
   "type": "module",
-  "types": "lib/stream-statics.d.ts",
+  "types": "build/stream-statics.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ovanderzee/stream-statics.git"

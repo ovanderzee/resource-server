@@ -1,5 +1,5 @@
 import { spawnSync } from 'child_process'
-import { spotPort } from './lib/configuration.js'
+import { spotPort } from './build/configuration.js'
 
 const killServer = (port) => {
     const lsofOut = spawnSync( 'lsof', ['-t', '-i:' + port], { encoding: 'utf-8' } );

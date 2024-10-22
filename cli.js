@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { startServer } from './lib/stream-statics.js'
-import { spotPort, spotProtocol, spotRoot } from './lib/configuration.js'
+import { startServer } from './build/stream-statics.js'
+import { spotPort, spotProtocol, spotRoot } from './build/configuration.js'
 
 if (process.argv && process.argv.length >= 2) {
     // [2, 4, 6] = --port --root etc...
