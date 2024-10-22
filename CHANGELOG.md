@@ -5,6 +5,10 @@
 - Unit tests
 - ETag, Content-Length and other headers
 - Default one-liners for open and close connections
+- Review README.md
+
+
+## [0.6.1]
 
 
 ## [0.6.0] 2024-10-22
