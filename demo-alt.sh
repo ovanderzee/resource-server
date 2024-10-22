@@ -13,6 +13,6 @@ echo "To terminate:"
 echo "node stop.js --9900"
 echo "---------------------------"
 
-node cli.js --https --./demo-index --9900 &
+node cli.js --https --./demo-alt --9900 &
 sleep 3 &&
 open https://localhost:9900

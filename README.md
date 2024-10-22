@@ -68,7 +68,9 @@ Happy flow:
 ```sh
 ./demo.sh
 ```
-Support for serving non-html index files:
+Support for serving non-html index files,
+Circumventing errors for missing favicon.ico,
+Serving with a secure protocol using a self-signed certificate:
 ```sh
-./demo-index.sh
+./demo-alt.sh
 ```
