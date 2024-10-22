@@ -10,6 +10,8 @@
 
 ### Added
 - A close command for CLI
+- Smother missing favicon.ico errors
+- Start demos through shell scripts
 
 
 ## [0.5.1] 2024-05-14

@@ -91,29 +91,39 @@ const serveResources = async function (
 
         absolutePath = path.resolve(this.root + locator.pathname)
 
-        if (isExistent(absolutePath) && isDirectory(absolutePath)) {
-            const indexPath = tryRedirect(absolutePath)
-            absolutePath = indexPath ? indexPath : absolutePath
-        }
+        if (isExistent(absolutePath)) {
 
-        contentType = mime.contentType(path.basename(absolutePath))
+            // check for alternative index files
+            if (isDirectory(absolutePath)) {
+                const indexPath = tryRedirect(absolutePath)
+                absolutePath = indexPath ? indexPath : absolutePath
+            }
 
-        if (contentType) {
-            response.setHeader('Content-Type', contentType)
+            contentType = mime.contentType(path.basename(absolutePath))
+
+            if (contentType) {
+                response.setHeader('Content-Type', contentType)
+            } else {
+                logNote(`No Content-Type found for ${request.url}`)
+            }
+
+            const fileStream = fs.createReadStream(absolutePath);
+
+            response.writeHead(200)
+
+            await outputStream(fileStream, response)
+
+        } else if (locator.pathname === '/favicon.ico') {
+            response.writeHead(204);
         } else {
-            logNote(`No Content-Type found for ${request.url}`)
+            response.writeHead(404);
+            throwError(`Artefact not found`)
         }
-
-        const fileStream = fs.createReadStream(absolutePath);
-
-        response.writeHead(200)
-
-        await outputStream(fileStream, response)
     }
-    catch (err) {
-        // implicit 404
-        logError(err)
-        response.write(`<h1>Page not found</h1>`)
+    catch (errTxt) {
+        // remaining errors
+        logError(errTxt)
+        response.write(`<h1>${errTxt}</h1>`)
         response.write('<p>' + absolutePath + '</p>')
     }
     finally {
