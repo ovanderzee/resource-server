@@ -1,6 +1,3 @@
-/// <reference types="node" />
-/// <reference types="node" />
-/// <reference types="node" />
 import http from 'http';
 import https from 'https';
 import http2 from 'http2';
