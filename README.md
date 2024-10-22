@@ -64,7 +64,11 @@ server.close(callback)
 ```
 
 ## Demo
-Run
+Happy flow:
 ```sh
-npm run demo
+./demo.sh
+```
+Support for serving non-html index files:
+```sh
+./demo-index.sh
 ```

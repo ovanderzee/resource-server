@@ -10,7 +10,6 @@
   },
   "scripts": {
     "build": "cf lib && tsc --resolveJsonModule",
-    "demo": "./demo.sh",
     "pretest": "npm run build",
     "test": "c8 -r text node lib/__tests__/test.js"
   },
