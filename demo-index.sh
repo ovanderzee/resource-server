@@ -6,12 +6,13 @@ npm run build &&
 echo "---------------------------"
 echo "Proofs:"
 echo "- Open a non-html index file"
-#echo "- No error on missing favicon"
+echo "- No error on missing favicon"
+echo "- Use https protocol"
 echo "---------------------------"
 echo "To terminate:"
 echo "node stop.js --9900"
 echo "---------------------------"
 
-node cli.js --http --./demo-index --9900 &
+node cli.js --https --./demo-index --9900 &
 sleep 3 &&
-open http://localhost:9900
+open https://localhost:9900
