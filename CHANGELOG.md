@@ -6,7 +6,8 @@
 - ETag, Content-Length and other headers
 - Default one-liners for open and close connections
 
-## [0.6.0]
+
+## [0.6.0] 2024-10-22
 
 ### Added
 - A close command for CLI

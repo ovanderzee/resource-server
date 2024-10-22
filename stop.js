@@ -12,7 +12,6 @@ const killServer = (port) => {
     } else {
         console.log('port', port, 'not active')
     }
-    return pids.length
 }
 
 if (process.argv && process.argv.length >= 2) {
