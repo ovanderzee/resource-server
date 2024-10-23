@@ -105,3 +105,35 @@ describe('Check existence of root', () => {
         assert(!rootOk, `folder ${badRoot} should not be found`);
     });
 });
+describe('Generate server url', () => {
+    it('should return a http-url when http is served', () => {
+        const currentCfg = {
+            port: 1234,
+            protocol: 'http',
+        };
+        const config = { ...cfg.defaultConfig, ...currentCfg };
+        const foundUrl = cfg.getLocalUrl(config);
+        const expectedUrl = 'http://localhost:1234';
+        assert(foundUrl === expectedUrl, `url should be '${expectedUrl}', found '${foundUrl}'`);
+    });
+    it('should return a https-url when http2 is served', () => {
+        const currentCfg = {
+            port: 1234,
+            protocol: 'http2',
+        };
+        const config = { ...cfg.defaultConfig, ...currentCfg };
+        const foundUrl = cfg.getLocalUrl(config);
+        const expectedUrl = 'https://localhost:1234';
+        assert(foundUrl === expectedUrl, `url should be '${expectedUrl}', found '${foundUrl}'`);
+    });
+    it('should return a https-url when https is served', () => {
+        const currentCfg = {
+            port: 1234,
+            protocol: 'https',
+        };
+        const config = { ...cfg.defaultConfig, ...currentCfg };
+        const foundUrl = cfg.getLocalUrl(config);
+        const expectedUrl = 'https://localhost:1234';
+        assert(foundUrl === expectedUrl, `url should be '${expectedUrl}', found '${foundUrl}'`);
+    });
+});

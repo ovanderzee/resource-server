@@ -7,7 +7,7 @@ import path from 'path'
 import mime from './optional-mime.js'
 import getSecureOptions from './certify-https.js'
 import * as types from './types'
-import { checkPort, checkRoot, defaultConfig } from './configuration.js'
+import { checkPort, checkRoot, defaultConfig, getLocalUrl } from './configuration.js'
 import {isDirectory, isExistent, isFile, logError, logNote, throwError} from './helpers.js'
 
 /*
@@ -152,7 +152,7 @@ export const startServer = async function (inputConfig: types.InputConfig): Prom
 
         logNote(
             `looking at '${config.root}'
-            \nlistening to ${config.protocol === 'http2' ? 'https' : 'http'}://localhost:${config.port}`
+            \nlistening to ${getLocalUrl(config)}`
         )
     }
     catch (err) {

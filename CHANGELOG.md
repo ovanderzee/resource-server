@@ -13,6 +13,9 @@
 ### Added
 - Describe browser behaviour on protocols and certificates
 
+### Fixed
+- Fixed displayed url when protocol is http2
+
 
 ## [0.6.0] 2024-10-22
 

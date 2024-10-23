@@ -33,3 +33,8 @@ export const checkRoot = (root: string): boolean => {
         fs.existsSync(path.resolve(root))
     return rootOk
 }
+
+export const getLocalUrl = (config: types.ServerConfig): string => {
+    const connectionType = config.protocol === 'http' ? 'http' : 'https'
+    return `${connectionType}://localhost:${config.port}`
+}

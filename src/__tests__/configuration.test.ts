@@ -2,6 +2,7 @@ import assert from 'node:assert'
 import { describe, it } from 'node:test'
 import * as cfg from '../configuration.js'
 import {startServer} from '../stream-statics.js';
+import * as types from '../types';
 
 describe('Spot portnumber', () => {
     it('should accept a port number greater than zero and smaller than 2^16', () => {
@@ -193,6 +194,54 @@ describe('Check existence of root', () => {
         assert(
             !rootOk,
             `folder ${badRoot} should not be found`,
+        )
+    })
+})
+
+describe('Generate server url', () => {
+
+    it('should return a http-url when http is served', () => {
+        const currentCfg = {
+            port: 1234,
+            protocol: 'http' as types.Protocol,
+        }
+        const config = {...cfg.defaultConfig, ...currentCfg}
+        const foundUrl = cfg.getLocalUrl(config)
+        const expectedUrl = 'http://localhost:1234'
+
+        assert(
+            foundUrl === expectedUrl,
+            `url should be '${expectedUrl}', found '${foundUrl}'`,
+        )
+    })
+
+    it('should return a https-url when http2 is served', () => {
+        const currentCfg = {
+            port: 1234,
+            protocol: 'http2' as types.Protocol,
+        }
+        const config = {...cfg.defaultConfig, ...currentCfg}
+        const foundUrl = cfg.getLocalUrl(config)
+        const expectedUrl = 'https://localhost:1234'
+
+        assert(
+            foundUrl === expectedUrl,
+            `url should be '${expectedUrl}', found '${foundUrl}'`,
+        )
+    })
+
+    it('should return a https-url when https is served', () => {
+        const currentCfg = {
+            port: 1234,
+            protocol: 'https' as types.Protocol,
+        }
+        const config = {...cfg.defaultConfig, ...currentCfg}
+        const foundUrl = cfg.getLocalUrl(config)
+        const expectedUrl = 'https://localhost:1234'
+
+        assert(
+            foundUrl === expectedUrl,
+            `url should be '${expectedUrl}', found '${foundUrl}'`,
         )
     })
 })

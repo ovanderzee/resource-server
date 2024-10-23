@@ -24,3 +24,7 @@ export const checkRoot = (root) => {
         fs.existsSync(path.resolve(root));
     return rootOk;
 };
+export const getLocalUrl = (config) => {
+    const connectionType = config.protocol === 'http' ? 'http' : 'https';
+    return `${connectionType}://localhost:${config.port}`;
+};

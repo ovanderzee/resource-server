@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import mime from './optional-mime.js';
 import getSecureOptions from './certify-https.js';
-import { checkPort, checkRoot, defaultConfig } from './configuration.js';
+import { checkPort, checkRoot, defaultConfig, getLocalUrl } from './configuration.js';
 import { isDirectory, isExistent, isFile, logError, logNote, throwError } from './helpers.js';
 /*
     Create the server
@@ -128,7 +128,7 @@ export const startServer = async function (inputConfig) {
     try {
         server.listen(config.port);
         logNote(`looking at '${config.root}'
-            \nlistening to ${config.protocol === 'http2' ? 'https' : 'http'}://localhost:${config.port}`);
+            \nlistening to ${getLocalUrl(config)}`);
     }
     catch (err) {
         logError(err);
