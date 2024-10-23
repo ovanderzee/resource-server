@@ -63,6 +63,23 @@ const callback = () => console.log(`Connection to localhost:${config.port} was c
 server.close(callback)
 ```
 
+## Protocol Problems
+
+The browser can display various intermediate notification pages.
+Protocol problems can display the following message, or similar:
+
+### The connection was reset
+You are browsing a https served page with a http url.
+
+### Secure Connection Failed
+You are browsing a http served page with a https url.
+
+### Warning: Potential Security Risk Ahead
+You are serving https or http2 which is using the internal self-signed certificate.
+On the internet that poses a security threat.
+To test your secure serving needs, click the appropriate buttons to continue for advanced users.
+
+
 ## Demo
 Happy flow:
 ```sh

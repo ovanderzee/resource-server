@@ -10,6 +10,9 @@
 
 ## [0.6.1]
 
+### Added
+- Describe browser behaviour on protocols and certificates
+
 
 ## [0.6.0] 2024-10-22
 
