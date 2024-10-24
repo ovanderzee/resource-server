@@ -1,6 +1,6 @@
 {
   "name": "stream-statics",
-  "version": "0.6.1",
+  "version": "1.0.0",
   "description": "Development server for testing and demonstrating front-end projects.",
   "main": "./build/stream-statics.js",
   "bin": {
