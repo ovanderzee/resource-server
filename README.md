@@ -63,7 +63,7 @@ const callback = () => console.log(`Connection to localhost:${config.port} was c
 server.close(callback)
 ```
 
-## Protocol Problems
+## Browsers and Protocols
 
 The browser can display various intermediate notification pages.
 Protocol problems can display the following message, or similar:
