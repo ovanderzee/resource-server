@@ -5,12 +5,12 @@ const killServer = (port) => {
     const lsofOut = spawnSync( 'lsof', ['-t', '-i:' + port], { encoding: 'utf-8' } );
     const pids = lsofOut.stdout.trim()
     if (pids) {
-        console.log('signal "kill" to server at port' , port)
+        console.log(`Sending signal "kill" to all listeners at port ${port}.`)
         pids.split('\n').forEach(
-            pid=> spawnSync('kill', ['-s', 'KILL', pid])
+            pid => spawnSync('kill', ['-s', 'KILL', pid])
         )
     } else {
-        console.log('port', port, 'not active')
+        console.log(`Port ${port} was not listened to.`)
     }
 }
 
