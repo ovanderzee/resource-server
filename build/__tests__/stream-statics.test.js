@@ -1,11 +1,32 @@
 import assert from 'node:assert';
+import esmock from 'esmock';
 import { describe, it } from 'node:test';
-import { startServer } from '../stream-statics.js';
-import * as http from 'http';
+// describe('Testing stream statics main module', async () => {
+const getCreatedServer = (protocol) => {
+    return {
+        name: `mocked ${protocol} server`,
+        listen: () => { }
+    };
+};
 describe('Serving http', async () => {
-    it('should bring up an http server', async (t) => {
-        t.mock.method(http, 'createServer');
-        await startServer({ protocol: 'http' });
-        assert.strictEqual(http.createServer.mock.callCount(), 1);
+    const ststMocks = await esmock('../stream-statics.js', {
+        http: {
+            createServer: () => getCreatedServer('http')
+        }
+    });
+    it('should create an http server', async (t) => {
+        const server = await ststMocks.startServer({ protocol: 'http' });
+        assert(server.name === 'mocked http server', `Expected http.createServer to have been called`);
+    });
+});
+describe('Serving https', async () => {
+    const ststMocks = await esmock('../stream-statics.js', {
+        https: {
+            createServer: () => getCreatedServer('https')
+        }
+    });
+    it('should create an https server', async (t) => {
+        const server = await ststMocks.startServer({ protocol: 'https' });
+        assert(server.name === 'mocked https server', `Expected https.createServer to have been called`);
     });
 });

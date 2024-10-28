@@ -142,7 +142,7 @@ export const startServer = async function (inputConfig: types.InputConfig): Prom
     }
 
     if (!(await checkPort(config.port))) {
-        throwError(`Port "${config.port}" is already in use`)
+        logError(`Port "${config.port}" is already in use`)
     }
 
     const server: types.WebServer = createServer(config)

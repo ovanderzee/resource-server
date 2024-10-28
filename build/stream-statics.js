@@ -122,7 +122,7 @@ export const startServer = async function (inputConfig) {
         throwError(`Path "${path.resolve(config.root)}" can not be found`);
     }
     if (!(await checkPort(config.port))) {
-        throwError(`Port "${config.port}" is already in use`);
+        logError(`Port "${config.port}" is already in use`);
     }
     const server = createServer(config);
     try {
