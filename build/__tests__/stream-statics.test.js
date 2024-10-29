@@ -1,13 +1,59 @@
 import assert from 'node:assert';
 import esmock from 'esmock';
-import { describe, it } from 'node:test';
-// describe('Testing stream statics main module', async () => {
+import { afterEach, describe, it } from 'node:test';
 const getCreatedServer = (protocol) => {
     return {
         name: `mocked ${protocol} server`,
         listen: () => { }
     };
 };
+describe('Serving happily', async () => {
+    const checkMocks = await esmock('../stream-statics.js', {
+        '../configuration': {
+            checkPort: () => 'mocked port check',
+            checkRoot: () => 'mocked filesystem check'
+        }
+    });
+    let server;
+    afterEach(() => {
+        server.close();
+    });
+    it('should serve with a root path', async (t) => {
+        server = await checkMocks.startServer({});
+        assert(server, `Expected a server to be returned`);
+    });
+    it('should check for ports and warn for duplicate use', async (t) => {
+        server = await checkMocks.startServer({});
+        assert(server, `Expected http.createServer to have been called`);
+    });
+});
+describe('Serving alternated', async () => {
+    it('should not work without a valid root path', async (t) => {
+        const checkMocks = await esmock('../stream-statics.js', {
+            '../configuration': {
+                checkRoot: () => false
+            }
+        });
+        let server;
+        try {
+            server = await checkMocks.startServer({});
+        }
+        catch (e) { }
+        finally {
+            assert(!server, `Expected server not to exist`);
+        }
+    });
+    it('should find a used port but serve anyway', async (t) => {
+        const checkMocks = await esmock('../stream-statics.js', {
+            '../configuration': {
+                checkPort: async () => false,
+            }
+        });
+        const server = await checkMocks.startServer({});
+        assert(server, `Expected http.createServer to have been called`);
+        server.close();
+    });
+});
 describe('Serving http', async () => {
     const ststMocks = await esmock('../stream-statics.js', {
         http: {

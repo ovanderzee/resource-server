@@ -117,12 +117,12 @@ response // http.ServerResponse | http2.Http2ServerResponse,
     Start the serve
 */
 export const startServer = async function (inputConfig) {
-    const config = Object.assign(defaultConfig, inputConfig);
+    const config = { ...defaultConfig, ...inputConfig };
     if (!checkRoot(config.root)) {
         throwError(`Path "${path.resolve(config.root)}" can not be found`);
     }
     if (!(await checkPort(config.port))) {
-        logError(`Port "${config.port}" is already in use`);
+        logNote(`Port "${config.port}" is already in use`);
     }
     const server = createServer(config);
     try {

@@ -135,14 +135,14 @@ const serveResources = async function (
     Start the serve
 */
 export const startServer = async function (inputConfig: types.InputConfig): Promise<types.WebServer> {
-    const config: types.ServerConfig = Object.assign(defaultConfig, inputConfig)
+    const config: types.ServerConfig = {...defaultConfig, ...inputConfig}
 
     if (!checkRoot(config.root)) {
         throwError(`Path "${path.resolve(config.root)}" can not be found`)
     }
 
     if (!(await checkPort(config.port))) {
-        logError(`Port "${config.port}" is already in use`)
+        logNote(`Port "${config.port}" is already in use`)
     }
 
     const server: types.WebServer = createServer(config)
