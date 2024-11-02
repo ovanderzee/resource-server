@@ -6,7 +6,7 @@ import * as types from '../types'
 const getCreatedServer = (protocol: string): any => {
     return {
         name: `mocked ${protocol} server`,
-        listen: () => {}
+        listen: function () {this.listening = true}
     }
 }
 
@@ -31,6 +31,11 @@ describe('Serving happily', async () => {
         assert(
             server,
             `Expected a server to be returned`
+        )
+
+        assert(
+            server.listening,
+            `Expected server to listen to ports`
         )
     })
 
@@ -83,6 +88,11 @@ describe('Serving alternated', async () => {
             `Expected http.createServer to have been called`
         )
 
+        assert(
+            server.listening,
+            `Expected server to listen to ports`
+        )
+
         server.close()
     })
 
@@ -103,6 +113,11 @@ describe('Serving http', async () => {
             server.name === 'mocked http server',
             `Expected http.createServer to have been called`
         )
+
+        assert(
+            server.listening,
+            `Expected server to listen to ports`
+        )
     })
 
 })
@@ -121,6 +136,11 @@ describe('Serving https', async () => {
         assert(
             server.name === 'mocked https server',
             `Expected https.createServer to have been called`
+        )
+
+        assert(
+            server.listening,
+            `Expected server to listen to ports`
         )
     })
 

@@ -4,7 +4,7 @@ import { afterEach, describe, it } from 'node:test';
 const getCreatedServer = (protocol) => {
     return {
         name: `mocked ${protocol} server`,
-        listen: () => { }
+        listen: function () { this.listening = true; }
     };
 };
 describe('Serving happily', async () => {
@@ -21,6 +21,7 @@ describe('Serving happily', async () => {
     it('should serve with a root path', async (t) => {
         server = await checkMocks.startServer({});
         assert(server, `Expected a server to be returned`);
+        assert(server.listening, `Expected server to listen to ports`);
     });
     it('should check for ports and warn for duplicate use', async (t) => {
         server = await checkMocks.startServer({});
@@ -51,6 +52,7 @@ describe('Serving alternated', async () => {
         });
         const server = await checkMocks.startServer({});
         assert(server, `Expected http.createServer to have been called`);
+        assert(server.listening, `Expected server to listen to ports`);
         server.close();
     });
 });
@@ -63,6 +65,7 @@ describe('Serving http', async () => {
     it('should create an http server', async (t) => {
         const server = await ststMocks.startServer({ protocol: 'http' });
         assert(server.name === 'mocked http server', `Expected http.createServer to have been called`);
+        assert(server.listening, `Expected server to listen to ports`);
     });
 });
 describe('Serving https', async () => {
@@ -74,5 +77,6 @@ describe('Serving https', async () => {
     it('should create an https server', async (t) => {
         const server = await ststMocks.startServer({ protocol: 'https' });
         assert(server.name === 'mocked https server', `Expected https.createServer to have been called`);
+        assert(server.listening, `Expected server to listen to ports`);
     });
 });
